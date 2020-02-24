@@ -1,0 +1,192 @@
+#STEP 1
+def generate_deck():
+    
+    values = ["2","3","4","5","6","7","8","9","10","Jack","Queen","King","Ace"]
+    suits = ["Spades","Hearts","Clubs","Diamonds"]
+    cards_deck = []
+    
+    for v in range(len(values)):
+        
+        for s in range(len(suits)):
+            card = values[v]+str(" of ")+suits[s]+"\t"
+            cards_deck.append(card)
+            
+    return cards_deck
+
+
+
+#STEP 2
+def print_deck(full_deck):
+    
+    print("Full deck is generated as below:")
+    length = len(full_deck)
+    counter = 0
+    
+    while counter!=length:
+        print(deck[counter],"\t \t",deck[counter+1],"\t \t",deck[counter+2],"\t \t",deck[counter+3],"\t \t")
+        counter += 4
+
+
+
+#step 3:
+def read_players_name():
+    
+    names_list = []
+    print("Who are the players?")
+    
+    for i in range(4):
+        name = input("Enter player "+str(i+1)+" name: ")
+        names_list.append(name)
+        
+    return names_list
+
+
+
+#step 4
+def shuffle_deck(deck_list):
+    
+    import random
+    player_card_list = []
+
+    for i in range(13):
+         card_drawn = random.choice(deck_list)
+         player_card_list.append(card_drawn)
+         deck_list.remove(card_drawn)
+
+    return player_card_list
+
+
+
+#step 5
+def print_player_cards(player1_cards,player2_cards,player3_cards,player4_cards,player_names):
+    
+    print(player_names[0],"cards:\t \t \t",player_names[1],"cards:\t \t \t",player_names[2],"cards:\t \t \t",player_names[3],"cards:")
+    
+    for counter in range(13):
+        print(player1_cards[counter],"\t \t",player2_cards[counter],"\t \t",player3_cards[counter],"\t \t",player4_cards[counter])
+
+
+
+###step 6
+def calculate_score(Players_card):
+    
+    x = []
+    y = []
+    game_score=0
+    
+    for i in range(len(Players_card)):
+        
+        if "2" in Players_card[i]:
+            x.append(2)
+        elif "3" in Players_card[i]:
+            x.append(3)
+        elif "4" in Players_card[i]:
+            x.append(4)
+        elif "5" in Players_card[i]:
+            x.append(5)
+        elif "6" in Players_card[i]:
+            x.append(6)
+        elif "7" in Players_card[i]:
+            x.append(7)
+        elif "8" in Players_card[i]:
+            x.append(8)
+        elif "9" in Players_card[i]:
+            x.append(9)
+        elif "10" in Players_card[i]:
+            x.append(10)
+        elif "Jack" in Players_card[i]:
+            x.append(11)
+        elif "Queen" in Players_card[i]:
+            x.append(12)
+        elif "King" in Players_card[i]:
+            x.append(13)
+        elif "Ace" in Players_card[i]:
+            x.append(14)
+
+
+    for i in range(len(Players_card)):
+        
+        if "Hearts" in Players_card[i]:
+            y.append(4)
+        elif "Spades" in Players_card[i]:
+            y.append(3)
+        elif "Clubs" in Players_card[i]:
+            y.append(2)
+        elif "Diamonds" in Players_card[i]:
+            y.append(1)
+        
+    for i in range(len(Players_card)):
+        cards_value = x[i]+(y[i]*10)
+        game_score = game_score+cards_value
+
+    return game_score
+
+
+
+##step 7    
+def select_winner(players_scores,player_names):
+    
+    print("The game scores are: ")
+    max = players_scores[0]
+    winner = player_names[0]
+    
+    for i in range(len(player_names)):
+        print(player_names[i]," = ",players_scores[i])
+            
+    for i in range(len(player_names)):
+        
+        if players_scores[i] > max:
+            max = players_scores[i]
+            winner = player_names[i]
+            
+    print(25*"---")
+    print("The winner is:",winner)
+                
+    
+    
+        
+
+
+
+
+
+
+# main program
+print (25*"-_-")
+print()
+ 
+ 
+#Step 1:  Generating Deck
+deck=generate_deck()
+ 
+#Step 2:  Printing Deck
+print_deck(deck)
+print (25*"---")
+print()
+ 
+#Step 3: Reading Players Names
+player_names=read_players_name()
+print (25*"---")
+print()
+ 
+#Step 4: Shuffling Deck
+player1_cards=shuffle_deck(deck)
+player2_cards=shuffle_deck(deck)
+player3_cards=shuffle_deck(deck)
+player4_cards=shuffle_deck(deck)
+ 
+#Step 5: Printing Players Cards
+print_player_cards(player1_cards, player2_cards, player3_cards,player4_cards, player_names)
+print (25*"---")   
+ 
+#Step 6 : Calculate Players Score
+players_scores=[]
+players_scores.append(calculate_score(player1_cards))
+players_scores.append(calculate_score(player2_cards))
+players_scores.append(calculate_score(player3_cards))
+players_scores.append(calculate_score(player4_cards))
+print()
+ 
+#Step 7: Selecting Winner
+select_winner(players_scores, player_names)
+print (25*"-_-")
